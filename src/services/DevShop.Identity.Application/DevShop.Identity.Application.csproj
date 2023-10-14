@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+    <Folder Include="Features\Auth\QueriesHandlers\" />
+    <Folder Include="Features\Auth\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\DevShop.WebAPI.Core\DevShop.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\DevShop.Identity.Infrastructure\DevShop.Identity.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
