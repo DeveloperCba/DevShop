@@ -1,6 +1,6 @@
 ﻿namespace DevShop.Core.Datas.Enumerators;
 
-public enum TypeDatabaseEnum
+public enum TypeDatabase
 {
     SQLServer,
     Postgres,

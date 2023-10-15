@@ -17,20 +17,20 @@ public class MongoDbRepository<TDocument> : IMongoDbRepository<TDocument>
     where TDocument : EntityDocument
 {
     private readonly IMongoCollection<TDocument> _collection;
-    private readonly MongoDbSettings _mongoDbSettings;
+
     public MongoDbRepository(IOptions<MongoDbSettings> mongoDbSettings)
     {
-        _mongoDbSettings = mongoDbSettings.Value;
-        var database = new MongoClient(_mongoDbSettings.ConnectionStrings).GetDatabase(_mongoDbSettings.DatabaseName);
+        var mongoSettings = mongoDbSettings.Value;
+        var database = new MongoClient(mongoSettings.ConnectionStrings).GetDatabase(mongoSettings.DatabaseName);
         _collection = database.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
     }
 
-    protected string GetCollectionName(Type documentType)
+    protected string? GetCollectionName(Type documentType)
     {
         return ((BsonCollectionAttribute)documentType.GetCustomAttributes(
                 typeof(BsonCollectionAttribute),
                 true)
-            .FirstOrDefault())?.CollectionName;
+            .FirstOrDefault()!)?.CollectionName;
     }
 
     public virtual IQueryable<TDocument> AsQueryable()

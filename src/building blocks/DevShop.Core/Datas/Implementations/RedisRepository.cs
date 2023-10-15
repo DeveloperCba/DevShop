@@ -90,7 +90,7 @@ public class RedisRepository : IRedisRepository
     private DistributedCacheEntryOptions GetOptionsCache()
     {
         return new DistributedCacheEntryOptions()
-            .SetAbsoluteExpiration(DateTime.Now.AddMinutes(_cacheSettings.AbsoluteExpirationInMinutes));
+            .SetAbsoluteExpiration(DateTime.Now.AddMinutes(_cacheSettings.AbsoluteExpirationInMinutes.GetValueOrDefault()));
         //.SetSlidingExpiration(TimeSpan.FromMinutes(_cacheSettings.SlidingExpirationInMinutes))
 
     }

@@ -16,7 +16,7 @@ public abstract class MainController : ControllerBase
 {
     protected ICollection<string> Errors = new List<string>();
     private readonly INotify _notification;
-    public MainController(INotify notification)
+    protected MainController(INotify notification)
     {
         _notification = notification;
     }
@@ -24,7 +24,7 @@ public abstract class MainController : ControllerBase
     protected bool ValidOperation() => !_notification.HasNotification();
 
 
-    protected ActionResult CustomResponse(object result = null)
+    protected ActionResult CustomResponse(object? result = null)
     {
         if (ValidOperation())
         {
@@ -61,24 +61,24 @@ public abstract class MainController : ControllerBase
         };
         validationProblemDetails.Errors.Add(errorTitle, errors);
 
-        return validationProblemDetails ?? null;
+        return validationProblemDetails;
     }
 
     protected ActionResult CustomResponse(ValidationResult validationResult)
     {
-        foreach (var erro in validationResult.Errors)
+        foreach (var error in validationResult.Errors)
         {
-            AddProcessingError(erro.ErrorMessage);
+            AddProcessingError(error.ErrorMessage);
         }
 
         return CustomResponse();
     }
     protected ActionResult CustomResponse(ModelStateDictionary modelState)
     {
-        var erros = modelState.Values.SelectMany(e => e.Errors);
-        foreach (var erro in erros)
+        var errors = modelState.Values.SelectMany(e => e.Errors);
+        foreach (var error in errors)
         {
-            var errorMsg = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
+            var errorMsg = error.Exception == null ? error.ErrorMessage : error.Exception.Message;
             AddProcessingError(errorMsg);
         }
         return CustomResponse();
@@ -92,7 +92,7 @@ public abstract class MainController : ControllerBase
         return CustomResponse();
     }
 
-    protected bool ResponseHasErrors(ResultResponse response)
+    protected bool ResponseHasErrors(ResultResponse? response)
     {
         if (response == null || !response.Errors.Messages.Any()) return false;
 

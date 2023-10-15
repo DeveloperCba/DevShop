@@ -86,7 +86,7 @@ public class GetUserByFilterQueryHandler : BaseService,
                 return default!;
             }
             modelCache = _mapper.Map<UserDto>(user);
-            await _redisRepository.SetCache(key, modelCache, (int)CacheExpirationEnum.OneMinute);
+            await _redisRepository.SetCache(key, modelCache, (int)CacheExpiration.OneMinute);
         }
         return modelCache;
     }

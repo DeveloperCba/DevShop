@@ -2,7 +2,7 @@
 
 namespace DevShop.Core.Datas.Enumerators;
 
-public enum CacheExpirationEnum
+public enum CacheExpiration
 {
     [Display(Name = "1Minutos", ShortName = "1", Description = "1 Minuto")]
     OneMinute = 1,
@@ -14,7 +14,7 @@ public enum CacheExpirationEnum
     FiveMinutes = 5,
 
     [Display(Name = "10Minutos", ShortName = "10", Description = "10 Minutos")]
-    TenMinutes = 5,
+    TenMinutes = 10,
 
     [Display(Name = "30Minutos", ShortName = "30", Description = "30 Minutos")]
     ThirtyMinutes = 30,

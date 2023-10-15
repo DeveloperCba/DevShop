@@ -24,7 +24,7 @@ public static class DecimalExtensions
     public static int ToCent(this decimal value)
     {
         var decimalParsed = value.ToString();
-        decimalParsed = decimalParsed.Contains(".") ? decimalParsed : decimalParsed + ".00";
+        decimalParsed = decimalParsed.Contains('.') ? decimalParsed : decimalParsed + ".00";
 
         decimalParsed = decimalParsed.Replace(".", "");
 

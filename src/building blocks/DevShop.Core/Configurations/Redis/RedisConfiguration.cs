@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace Core.Configurations.Redis;
+namespace DevShop.Core.Configurations.Redis;
 
 public static class RedisConfiguration
 {
@@ -30,11 +30,13 @@ public static class RedisConfiguration
 
     public static IServiceCollection AddRedisConfiguration(this IServiceCollection services, RedisSettings cacheSettings)
     {
+        if(cacheSettings == null) throw new ArgumentNullException(nameof(cacheSettings));
+
         services.AddSingleton<IDistributedCache, RedisCache>();
         services.AddScoped(typeof(IRedisRepository), typeof(RedisRepository));
         services.AddStackExchangeRedisCache(options =>
         {
-            options.ConfigurationOptions = GetOptionsCache(cacheSettings);
+            options.ConfigurationOptions =  GetOptionsCache(cacheSettings);
             options.InstanceName = cacheSettings.ChannelPrefix;
 
         });
@@ -42,15 +44,15 @@ public static class RedisConfiguration
         return services;
     }
 
-    private static ConfigurationOptions GetOptionsCache(RedisSettings cacheSettings = null)
+    private static ConfigurationOptions GetOptionsCache(RedisSettings cacheSettings)
     {
-        var serverPort = string.IsNullOrEmpty(cacheSettings.Port) ? string.Empty : ":" + cacheSettings.Port;
-        var serverHost = $"{cacheSettings.Host}{serverPort}";
+        var serverPort = string.IsNullOrEmpty(cacheSettings?.Port) ? string.Empty : ":" + cacheSettings.Port;
+        var serverHost = $"{cacheSettings?.Host}{serverPort}";
         var configurationOptions = ConfigurationOptions.Parse(serverHost);
-        configurationOptions.User = cacheSettings.User;
-        configurationOptions.Password = cacheSettings.Password;
+        configurationOptions.User = cacheSettings?.User;
+        configurationOptions.Password = cacheSettings?.Password;
         configurationOptions.ChannelPrefix = new RedisChannel(cacheSettings?.ChannelPrefix,RedisChannel.PatternMode.Auto);
-        configurationOptions.ClientName = cacheSettings.ChannelPrefix;
+        configurationOptions.ClientName = cacheSettings?.ChannelPrefix;
         configurationOptions.AbortOnConnectFail = false;
         configurationOptions.ReconnectRetryPolicy = new ExponentialRetry(5000);
         return configurationOptions;

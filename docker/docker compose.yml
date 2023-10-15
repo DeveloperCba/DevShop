@@ -1,5 +1,9 @@
 version: "3.9"
 
+networks:
+  devnet:
+    external: true
+
 services:
 
   docker_redis:
@@ -10,8 +14,8 @@ services:
     hostname: redis
     ports:
       - "6379:6379"
-    #networks:
-    #  - dev-network
+    networks:
+      - devnet  
 
   docker_postgres:
     image: postgres:14.3
@@ -19,8 +23,8 @@ services:
     restart: always
     ports:
       - "15432:5432"
-    #networks:
-    #  - dev-network
+    networks:
+      - devnet  
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: MeuDb@123
@@ -39,8 +43,8 @@ services:
     ports:
       - "5101:5101"
       - "5102:5102"
-    #networks:
-    #  - dev-network
+    networks:
+      - devnet  
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:5101;http://+5102
@@ -62,8 +66,8 @@ services:
     ports:
       - "5201:5201"
       - "5202:5202"
-    #networks:
-    #  - dev-network
+    networks:
+      - devnet  
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:5201;http://+5202
@@ -72,12 +76,9 @@ services:
     volumes:
       - ./certs:/https:ro
     depends_on:
-      #- identity.api
+      - identity.api
       - docker_redis
       - docker_postgres
-
-#dev-network:
-#    driver: bridge
 
 volumes:
   dpkeys:

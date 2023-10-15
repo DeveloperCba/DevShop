@@ -40,7 +40,7 @@ public static class ExpressionExtensions
         return left.Or(right);
     }
 
-    private class ParameterReplaceVisitor : ExpressionVisitor
+    private sealed class ParameterReplaceVisitor : ExpressionVisitor
     {
         private readonly ParameterExpression _oldParameter;
         private readonly Expression _newExpression;

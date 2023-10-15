@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Core.Configurations.Redis;
+using DevShop.Core.Configurations.Redis;
 using DevShop.Core.Datas.Implementations;
 using DevShop.Core.Datas.Interfaces;
 using DevShop.Core.DomainObjects;

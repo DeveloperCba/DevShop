@@ -2,8 +2,8 @@
 
 public class RedisSettings
 {
-    public int AbsoluteExpirationInMinutes { get; set; }
-    public int SlidingExpirationInMinutes { get; set; }
+    public int? AbsoluteExpirationInMinutes { get; set; }
+    public int? SlidingExpirationInMinutes { get; set; }
     public string Host { get; set; }
     public string Port { get; set; }
     public string ChannelPrefix { get; set; }

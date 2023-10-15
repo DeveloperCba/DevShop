@@ -62,7 +62,7 @@
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  color:#4990e2;;
+  color:#4990e2;
 }
 
 .swagger-ui .opblock-tag svg {
@@ -578,7 +578,7 @@
   background: transparent;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
   font-family: Titillium Web, sans-serif;
-  color: #4990e2;;
+  color: #4990e2;
 }
 
 .swagger-ui .btn[disabled] {
@@ -852,7 +852,6 @@
   font-style: italic;
   margin: 0!important;
   font-family: Source Code Pro, monospace;
-  font-weight: 600;
   color: #3b4151
 }
 
@@ -929,9 +928,8 @@
 .swagger-ui .dialog-ux .modal-ux-content p {
   font-size: 12px;
   margin: 0 0 5px;
-  color: #41444e;
   font-family: Open Sans, sans-serif;
-  color: #3b4151
+  color: #3b4151;
 }
 
 .swagger-ui .dialog-ux .modal-ux-content h4 {
@@ -978,7 +976,6 @@
   font-size: 12px;
   font-weight: 300;
   font-family: Source Code Pro, monospace;
-  font-weight: 600;
   color: #3b4151
 }
 
@@ -1185,7 +1182,6 @@
   font-weight: 300;
   vertical-align: middle;
   font-family: Source Code Pro, monospace;
-  font-weight: 600;
   color: #3b4151
 }
 
@@ -1360,7 +1356,6 @@
   font-weight: 300!important;
   margin: 0;
   font-family: Source Code Pro, monospace;
-  font-weight: 600;
   color: #3b4151
 }
 

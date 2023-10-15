@@ -52,7 +52,7 @@ public class GetAllUserQueryHandler : BaseService,
             if (users.Count > 0 && users != null)
             {
                 modelCache = _mapper.Map<List<UserDto>>(users);
-                await _redisRepository.SetCache(key, modelCache, (int)CacheExpirationEnum.OneMinute);
+                await _redisRepository.SetCache(key, modelCache, (int)CacheExpiration.OneMinute);
             }
         }
 
@@ -82,7 +82,7 @@ public class GetAllUserQueryHandler : BaseService,
             if (users.Count > 0)
             {
                 modelCache = _mapper.Map<List<UserDto>>(users);
-                await _redisRepository.SetCache(key, modelCache, (int)CacheExpirationEnum.OneMinute);
+                await _redisRepository.SetCache(key, modelCache, (int)CacheExpiration.OneMinute);
             }
         }
         return modelCache ?? default!;
