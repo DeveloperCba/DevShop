@@ -108,7 +108,6 @@ public class AutenticationService : IAutenticationService
             {
                 Id = user.Id.ToString(),
                 Email = user.Email,
-                //Document = user.Document,
                 Claims = claims.Select(c => new UserClaimDto { Type = c.Type, Value = c.Value })
             }
         };

@@ -1,0 +1,104 @@
+version: "3.9"
+
+services:
+
+  docker_redis:
+    image: redis
+    container_name: docker_redis
+    restart: always
+    command: redis-server --requirepass Redis@123
+    hostname: redis
+    ports:
+      - "6379:6379"
+    #networks:
+    #  - dev-network
+
+  docker_postgres:
+    image: postgres:14.3
+    container_name: docker_postgres
+    restart: always
+    ports:
+      - "15432:5432"
+    #networks:
+    #  - dev-network
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: MeuDb@123
+      POSTGRES_DB: Identity
+
+    volumes:
+      - ./dbdata-postgres/:/var/lib/postgresql/data/
+
+  identity.api:
+    image: identity.api:latest
+    container_name: dev.identity.api
+    build:
+      context: ../src
+      dockerfile: ./services/DevShop.Identity.API/Dockerfile
+    restart: always
+    ports:
+      - "5101:5101"
+      - "5102:5102"
+    #networks:
+    #  - dev-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:5101;http://+5102
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Dev@123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/certificado-dev.pfx
+    volumes:
+      - ./certs:/https:ro
+    depends_on:
+      - docker_redis
+      - docker_postgres
+
+  webapp:
+    image: webapp:latest
+    container_name: webapp
+    build:
+      context: ../src
+      dockerfile: ./web/DevShop.Identity.WebApp/Dockerfile
+    restart: always
+    ports:
+      - "5201:5201"
+      - "5202:5202"
+    #networks:
+    #  - dev-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:5201;http://+5202
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Dev@123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/certificado-dev.pfx
+    volumes:
+      - ./certs:/https:ro
+    depends_on:
+      #- identity.api
+      - docker_redis
+      - docker_postgres
+
+#dev-network:
+#    driver: bridge
+
+volumes:
+  dpkeys:
+
+    # docker-compose -f "docker compose.yml" up --build
+    # docker-compose -f middleware_compose.yml down --volumes
+    # docker-compose up --build
+    # docker-postgres_Vs13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
