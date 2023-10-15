@@ -15,7 +15,8 @@ public class LoginCommandHandler : BaseService, IRequestHandler<LoginCommand, Us
     public LoginCommandHandler(
         IUserRepository userRepository,
         INotify notification,
-        IAutenticationService autenticationService) : base(notification)
+        IAutenticationService autenticationService
+        ) : base(notification)
     {
         _userRepository = userRepository;
         _autenticationService = autenticationService;

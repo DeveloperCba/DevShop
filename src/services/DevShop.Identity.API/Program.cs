@@ -24,7 +24,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddApiConfiguration(builder.Configuration);
 
-builder.Services.AddIdentityConfiguration(builder.Configuration);
+//builder.Services.AddIdentityConfiguration(builder.Configuration);
 
 builder.Services.AddSwaggerConfiguration();
 
@@ -42,6 +42,5 @@ app.UseSwaggerConfiguration(provider);
 
 app.UseApiConfiguration(builder.Environment, builder.Configuration);
 
-
-
+app.Run();
 #endregion

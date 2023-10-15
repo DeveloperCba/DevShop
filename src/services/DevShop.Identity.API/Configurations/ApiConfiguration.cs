@@ -42,7 +42,7 @@ public static class ApiConfiguration
         app.UseRequestResponseLoggingMiddleware();
 
         //if(env.IsProduction())
-        //  app.UseExceptionMiddleware();
+          app.UseExceptionMiddleware();
 
         app.UseEndpoints(endpoints =>
         {

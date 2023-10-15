@@ -6,6 +6,7 @@ using DevShop.Core.DomainObjects;
 using DevShop.Core.Validations.Services.Email;
 using DevShop.Identity.Application.Features.Auth.Validators;
 using DevShop.Identity.Application.Features.User.Validators;
+using DevShop.Identity.Application.Mappings;
 using DevShop.Identity.Application.Services;
 using DevShop.Identity.Domain.Interfaces;
 using DevShop.Identity.Infrastructure.Context;
@@ -28,8 +29,8 @@ public static class DependencyInjectionConfiguration
         services.AddScoped<INotify, Notify>();
         services.AddScoped<IAspNetUser, AspNetUser>();
         services.AddScoped<IAutenticationService, AutenticationService>();
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+        services.AddAutoMapper(typeof(AutoMapperConfiguration).Assembly);
+         
         services.AddValidatorsFromAssemblyContaining(typeof(CreateUserCommandValidation));
         services.AddMediatR(options => options.RegisterServicesFromAssemblies(new Assembly[] { typeof(LoginCommandValidator).Assembly,
             typeof(AutenticationService).Assembly,
@@ -39,6 +40,7 @@ public static class DependencyInjectionConfiguration
         }));
 
         services.AddUnhandledExceptionMiddlewareServices();
+        services.AddValidationMiddlewareServices();
         services.AddValidationMiddlewareServices();
 
         services.AddRedisConfiguration(configuration);
