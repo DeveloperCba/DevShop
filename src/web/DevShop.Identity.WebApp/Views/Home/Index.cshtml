@@ -1,8 +1,345 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@* 
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+ *@
+<style>
+    .pr {
+        margin-right: 5px !important;
+    }
+</style>
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="row">
+    <div class="col-4"><button id="btnClick" class="btn btn-success">Abre</button></div>
+    <div class="col-4"><button id="btnClick2" class="btn btn-info">Fecha</button></div>
+    <div class="col-4"><button id="btnClick3" class="btn btn-danger">Carregando</button></div>
+</div>
+<br />
+<div class="row">
+    <div class="col-4"><button id="btnClick4" class="btn btn-warning">Aguardando</button></div>
+    <div class="col-4"><button id="btnClick5" class="btn btn-warning">Loading</button></div>
+</div>
+<br />
+<div class="row">
+    <div class="col-4"><button id="btnClick6" class="btn btn-danger">Carregando Com Ajax</button></div>
+    <div class="col-4"><button id="btnClick7" class="btn btn-success">Carregando Com Ajax Com Parametro</button></div>
+    <div class="col-4"><button id="btnClick8" class="btn btn-info">Carregando Com Ajax Com Lista de Parametros</button></div>
+</div>
+<br />
+<div class="row">
+    <div class="col-4"><button id="btnClick9" class="btn btn-warning">Carregando Com Ajax Com Lista de Parametros 2</button></div>
+    <div class="col-4"><button id="btnClick10" class="btn btn-danger">Carregando Com Ajax Com ViewModel</button></div>
+    <div class="col-4"></div>
+</div>
+<br />
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4"></div>
+    <div class="col-4"></div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <table id="tableData" class="table"
+               data-toggle="table"
+               data-pagination="true"
+               data-search="true"
+               data-show-refresh="true">
+            <thead>
+                <tr>
+                    <th data-field="id">Id</th>
+                    <th data-field="name">Name</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Título do Modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do modal vai aqui -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <!-- Adicione botões personalizados, se necessário -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+    <script>
+        $(document).ready(function () {
+
+
+
+            $("#btnClick").click(function () {
+                loadingPage("block");
+            });
+
+            $("#btnClick2").click(function () {
+                loadingPage("none");
+            });
+
+            $("#btnClick3").click(function () {
+                showAlert("warning", "Title", "Testando Mensagem", (event) => { alert('Executando função') })
+            });
+
+
+            $("#btnClick4").click(function () {
+                showConfirm("warning", "Title", "Testando Mensagem", (event) => { alert('continue') }, (event) => { alert('cancela') })
+            });
+
+
+            $("#btnClick5").click(function () {
+                showLoading("Aguarde...", "Aguarde, sua solicitação está sendo processada", 1000, () => { })
+            });
+
+            $("#btnClick6").click(function () {
+                loadingPage("block");
+                var request = AjaxRequest("GET", "Home/TesteAjax", "json")
+                showLoading("Aguarde...", "Aguarde, sua solicitação está sendo processada", 1000, () => { })
+                setTimeout(function () {
+                    loadingPage("none");
+                }, 2000);
+            });
+
+            $("#btnClick7").click(function () {
+
+                var parameter =
+                {
+                    "id": 1,
+                    "name": "Name 01"
+                }
+
+                var request = AjaxRequest("POST", "Home/TesteAjaxPost", "json", parameter, (result) => {
+                    console.log("sucesso")
+                    console.log(result.data)
+                }, () => {
+                    console.log("Error")
+                })
+                showLoading("Aguarde...", "Aguarde, sua solicitação está sendo processada", 1000, request)
+            });
+
+
+            $("#btnClick8").click(function () {
+                var
+                    parameterViewModel = {
+                        "pessoas": [
+                            {
+                                "id": 1,
+                                "name": "Name 01"
+                            },
+                            {
+                                "id": 2,
+                                "name": "Name 02"
+                            }
+                        ]
+                    }
+                var request = AjaxRequest("POST", "Home/TesteAjaxListaParametrosPost", "json", parameterViewModel, (result) => {
+                    console.log("Método 1: " + result.data)
+                }, (error) => {
+                    console.log(error)
+                })
+                showLoading("Aguarde...", "Aguarde, sua solicitação está sendo processada", 1000, request)
+            });
+
+            $("#btnClick9").click(function () {
+                var parameterLista = [
+                    {
+                        "id": 1,
+                        "name": "Name 01"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Name 02"
+                    }
+                ]
+                var request = AjaxRequest("POST", "Home/TesteAjaxListaParametrosPost2", "json", parameterLista, (result) => {
+
+                    setTimeout(function () {
+                        $("#tableData").bootstrapTable('destroy');
+                        $("#tableData").bootstrapTable({
+                            data: result.data,
+                            // Configurações de paginação
+                            pagination: true,
+                            pageSize: 10,
+                            pageList: [10, 25, 50, 100],
+
+                            // Pesquisa
+                            search: true,
+
+                            // Ordenação
+                            sortable: true,
+                            // Personalização da exibição da tabela
+                            height: 400,
+                            showRefresh: true,
+
+                            // Outras opções
+                            showToggle: true,
+                            showColumns: true,
+                            toolbar: '#toolbar',
+                            showExport: true,
+                            exportDataType: 'all',
+                            exportTypes: ['csv', 'excel'],
+
+                            columns: [
+                                {
+                                    field: 'id',
+                                    title: 'ID',
+                                    sortable: true
+                                },
+                                {
+                                    field: 'name',
+                                    title: 'Nome',
+                                    sortable: true
+                                },
+                                {
+                                    title: 'Coluna formatada',
+                                    formatter: (value, row, index) => {
+
+                                        return '$' + row.id;
+                                    }
+                                },
+                                {
+                                    field: 'actions', // Coluna de ações
+                                    title: 'Ações',
+                                    formatter: formatActions // Usando uma função de formatação personalizada
+                                }
+                            ]
+                        });
+                    }, 2000);
+
+
+
+                }, (error) => {
+                    console.log(error)
+                })
+                showLoading("Aguarde...", "Aguarde, sua solicitação está sendo processada", 2000, request)
+            });
+
+            $("#btnClick10").click(function () {
+                var parameterLista = {
+                    "pessoas": [
+                        {
+                            "id": 1,
+                            "name": "Name 01"
+                        },
+                        {
+                            "id": 2,
+                            "name": "Name 02"
+                        }
+                    ],
+                    "pessoas2": [
+                        {
+                            "id": 1,
+                            "name": "Name 01"
+                        },
+                        {
+                            "id": 2,
+                            "name": "Name 02"
+                        }
+                    ],
+                    "pessoas1": {
+                        "id": 1,
+                        "name": "Name 01"
+                    }
+                }
+                var request = AjaxRequest("POST", "Home/TesteAjaxListaParametros2Post", "json", parameterLista, (result) => {
+                    console.log("Método 2: " + result.data)
+                }, (error) => {
+                    console.log(error)
+                })
+                showLoading("Aguarde...", "Aguarde, sua solicitação está sendo processada", 1000, request)
+            });
+        });
+
+
+        // Função de formatação personalizada para a coluna de ações
+        function formatActions(value, row, index) {
+            return '<div class="text-center">' +
+                '<button class="btn btn-info pr" onclick="viewRow(' + row.id + ')"><i class="fas fa-eye"></i> </button>' +
+                '<button class="btn btn-secondary pr" onclick="printRow(' + row.id + ')"><i class="fas fa-print"></i> </button>' +
+                '<button class="btn btn-success pr" onclick="addNewRow()"><i class="fas fa-plus"></i></button>' +
+                '<button class="btn btn-primary pr" onclick="editRow(' + row.id + ')"><i class="fas fa-edit"></i></button>' +
+                '<button class="btn btn-danger pr" onclick="deleteRow(' + row.id + ')"><i class="fas fa-trash-alt"></i></button>' +
+                '</div">';
+        }
+
+        // Função para editar uma linha
+        function editRow(id) {
+            // Implemente a lógica de edição aqui
+            alert('Editar ID ' + id);
+        }
+
+        // Função para adicionar uma nova linha
+        function addNewRow() {
+            // Implemente a lógica de adição de uma nova linha aqui
+            alert('Adicionar nova linha');
+        }
+
+        // Função para excluir uma linha
+        function deleteRow(id) {
+            // Implemente a lógica de exclusão aqui
+            alert('Excluir ID ' + id);
+        }
+
+        function viewRow(id) {
+            alert('Imprimir ID ' + id);
+            // $("#myModal").show();
+        }
+
+        function printRow(id) {
+            alert('Imprimir ID ' + id);
+        }
+
+        function openModal2(url, size, target) {
+            var url2 = url.replace(/\//g, "_");
+
+            if (url2.indexOf("?") > 0) {
+                url2 = url2.split("?")[0];
+            }
+
+
+            if (target == null) {
+                target = "#modal" + url2;
+            }
+
+            $(target).remove();
+
+            $('<div class="modal fade text-left" id="' + target.replace("#", "") + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel16" aria-hidden="true"><div class="modal-dialog" role="document"></div></div>').appendTo('body');
+
+            if (size == null || size === "") {
+                $(target).find('.modal-dialog').addClass('modal-lg');
+            } else {
+                $(target).find('.modal-dialog').attr("style", "max-width: " + size + "");
+            }
+
+            $(target).modal("show");
+            $(target).find('.modal-dialog').html("");
+            $(target).find('.modal-dialog').load(url, function () {
+                // Callback function when the content is loaded (you can add your own logic here).
+            });
+
+            $(target).on('hidden.bs.modal', function () {
+                $(target).remove();
+            });
+        }
+
+    </script>
+}

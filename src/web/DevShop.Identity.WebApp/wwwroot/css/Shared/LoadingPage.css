@@ -1,0 +1,31 @@
+﻿.custom-popup {
+    background: none;
+}
+
+.custom-title {
+    justify-content: center;
+}
+
+    .custom-title .custom-title-img {
+        content: url("/images/gif/LoadingPage.gif");
+        max-width: 50%;
+        height: auto;
+    }
+
+.custom-loader {
+    border-color: #fc6c00 transparent #ef2900 transparent !important;
+}
+
+.custom-actions {
+    margin-top: 0px;
+}
+
+
+.center-loading {
+    border-color: #fc6c00 transparent #ef2900 transparent !important;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
