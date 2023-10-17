@@ -7,8 +7,10 @@ namespace DevShop.Identity.Infrastructure.Repository;
 
 public class LogRequestRepository : Repository<LogRequest>, ILogRequestRepository
 {
+    private readonly LogDbContext _context;
     public LogRequestRepository(LogDbContext context) : base(context)
     {
-
+        _context = context;
     }
+    public IUnitOfWork UnitOfWork => _context;
 }

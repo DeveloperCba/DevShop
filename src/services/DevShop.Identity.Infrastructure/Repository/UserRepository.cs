@@ -9,6 +9,6 @@ public class UserRepository : Repository<ApplicationUser>, IUserRepository
 {
     public UserRepository(ApplicationIdentityDbContext context) : base(context)
     {
-
+       
     }
 }

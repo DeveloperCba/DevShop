@@ -104,6 +104,7 @@ public class ExceptionMiddleware
                 Path = context.Request?.Path.ToString().Trim(),
                 Query = WebUtility.UrlDecode(context.Request?.QueryString.ToString().Trim()),
             });
+            await logErroRepository.UnitOfWork.Commit();
 
             var resultErrors = new ResultResponse
             {

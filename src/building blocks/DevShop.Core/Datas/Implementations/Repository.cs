@@ -14,6 +14,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
     protected readonly IDbConnection Connection;
     protected readonly DbContext Context;
     internal DbSet<TEntity> dbSet;
+
     protected Repository(
         DbContext context
     )
@@ -153,7 +154,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
         try
         {
             await dbSet.AddAsync(entity);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -166,7 +167,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
         try
         {
             await dbSet.AddRangeAsync(entities);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -179,7 +180,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
         try
         {
             dbSet.Update(entity);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -192,7 +193,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
         try
         {
             dbSet.UpdateRange(entities);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -205,7 +206,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
         try
         {
             dbSet.Remove(entity);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -218,7 +219,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
         try
         {
             dbSet.RemoveRange(entities);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -326,4 +327,5 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
         Context?.Dispose();
         Connection?.Dispose();
     }
+ 
 }

@@ -1,21 +1,13 @@
-﻿using DevShop.Identity.Domain.Models;
+﻿using DevShop.Core.Datas.Interfaces;
+using DevShop.Identity.Domain.Models;
+using DevShop.Identity.Infrastructure.Extensions;
 using DevShop.Identity.Infrastructure.Mappings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevShop.Identity.Infrastructure.Context;
 
-public class ApplicationIdentityDbContext : IdentityDbContext
-<
-    ApplicationUser,
-    ApplicationRole,
-    string,
-    ApplicationUserClaim,
-    ApplicationUserRole,
-    ApplicationUserLogin,
-    ApplicationRoleClaim,
-    ApplicationUserToken
->
+public class ApplicationIdentityDbContext : IdentityDbContext, IUnitOfWork
 {
     //public DbSet<SecurityKeyWithPrivate> SecurityKeys { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
@@ -27,11 +19,17 @@ public class ApplicationIdentityDbContext : IdentityDbContext
     public virtual DbSet<ApplicationRoleClaim> ApplicationRoleClaim { get; set; }
     public virtual DbSet<ApplicationUserToken> ApplicationUserToken { get; set; }
 
-    public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options) {
-        
+    //public ApplicationIdentityDbContext(){ }
+
+    public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options)
+    {}
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.ConfigureColumnTypeConvention();
     }
 
-    //public ApplicationIdentityDbContext(){ }
+   
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //var conn = "Server=pgsql.oficinadev.kinghost.net; Database=oficinadev; Port=5432;User Id=oficinadev;Password=Estadao101322";
@@ -47,7 +45,25 @@ public class ApplicationIdentityDbContext : IdentityDbContext
         modelBuilder.ApplyConfiguration(new ApplicationUserMapping());
         modelBuilder.ApplyConfiguration(new ApplicationUserRoleMapping());
         modelBuilder.ApplyConfiguration(new ApplicationUserTokenMapping());
-            
+
         //modelBuilder.ApplyConfigurationsFromAssembly(assembly: Assembly.GetExecutingAssembly());
+    }
+
+    public async Task<bool> Commit()
+    {
+
+        foreach (var entry in ChangeTracker.Entries()
+                     .Where(entry => entry.Entity.GetType().GetProperty("CreatedAt") != null))
+        {
+            if (entry.State == EntityState.Added)
+                entry.Property("CreatedAt").CurrentValue = DateTime.Now;
+
+            if (entry.State == EntityState.Modified)
+                entry.Property("CreatedAt").IsModified = false;
+
+        }
+        var success = await base.SaveChangesAsync() > 0;
+        return success;
+
     }
 }

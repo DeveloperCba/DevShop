@@ -2,7 +2,7 @@
 
 namespace DevShop.Core.Datas.Interfaces;
 
-public interface ILogErrorRepository : IRepository<LogError>
+public interface ILogErrorRepository : IRepository<LogError> 
 {
-
+    IUnitOfWork UnitOfWork { get; }
 }

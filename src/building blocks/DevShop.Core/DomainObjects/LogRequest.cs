@@ -2,6 +2,7 @@
 
 public class LogRequest  
 {
+
     public Guid Id { get; set; }
     public string Device { get; set; }
     public string Host { get; set; }
@@ -15,4 +16,6 @@ public class LogRequest
     public int StatusCode { get; set; }
     public TimeSpan ExecutionTime { get; set; }
     public string Response { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

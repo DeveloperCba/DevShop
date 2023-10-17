@@ -53,6 +53,8 @@ public class RequestResponseLoggingMiddleware
             {
                 await _logRequestRepository.UpdateAsync(logRequest);
             }
+
+            await _logRequestRepository.UnitOfWork.Commit();
         }
         catch (Exception ex)
         {

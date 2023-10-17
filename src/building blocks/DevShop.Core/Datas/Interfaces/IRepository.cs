@@ -5,6 +5,7 @@ namespace DevShop.Core.Datas.Interfaces;
 
 public interface IRepository<TEntity> : IDisposable where TEntity : class
 {
+
     //EntityFrameworkCore
     Task<TEntity> GetByIdAsync(int id);
     Task<TEntity> GetByIdAsync(string id);
