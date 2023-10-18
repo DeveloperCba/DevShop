@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 
-namespace NerdStore.WebApp.Tests.Config
+namespace Core.Test.Extensions
 {
     public static class TestsExtensions
     {

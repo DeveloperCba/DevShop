@@ -39,7 +39,7 @@ public static class ApiConfiguration
 
         app.UseAuthConfiguration();
 
-        app.UseRequestResponseLoggingMiddleware();
+        //app.UseRequestResponseLoggingMiddleware();
 
         //if(env.IsProduction())
           app.UseExceptionMiddleware();

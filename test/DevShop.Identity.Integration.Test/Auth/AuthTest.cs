@@ -2,9 +2,7 @@
 using DevShop.Identity.Application.Features.User.Dtos;
 using DevShop.Identity.Application.Models.Requesties;
 using DevShop.Identity.Integration.Test.Configurations;
-using MongoDB.Bson.IO;
 using System.Net.Http.Json;
-using Newtonsoft.Json;
 
 namespace DevShop.Identity.Integration.Test.Auth
 {

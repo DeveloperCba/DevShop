@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using DevShop.Core.DomainObjects;
+using DevShop.Core.Mediator;
 using DevShop.Identity.Application.Features.Auth.Commands;
 using DevShop.Identity.Application.Features.User.Dtos;
 using DevShop.Identity.Application.Models.Dtos;
@@ -19,11 +20,13 @@ namespace DevShop.Identity.API.Controllers.V1;
 public class AuthController : MainController
 {
     private readonly IMediator _mediator;
+    //private readonly IMediatorHandler _mediator;
     private readonly IMapper _mapper;
 
     public AuthController(
         INotify notification,
         IMediator mediator,
+        //IMediatorHandler mediator,
         IMapper mapper
     ) : base(notification)
     {

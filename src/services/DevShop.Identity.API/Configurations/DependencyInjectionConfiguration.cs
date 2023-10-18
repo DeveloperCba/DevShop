@@ -3,6 +3,7 @@ using DevShop.Core.Configurations.Redis;
 using DevShop.Core.Datas.Implementations;
 using DevShop.Core.Datas.Interfaces;
 using DevShop.Core.DomainObjects;
+using DevShop.Core.Mediator;
 using DevShop.Core.Validations.Services.Email;
 using DevShop.Identity.Application.Features.Auth.Validators;
 using DevShop.Identity.Application.Features.User.Validators;
@@ -29,6 +30,7 @@ public static class DependencyInjectionConfiguration
         services.AddScoped<INotify, Notify>();
         services.AddScoped<IAspNetUser, AspNetUser>();
         services.AddScoped<IAutenticationService, AutenticationService>();
+        services.AddScoped<IMediatorHandler, MediatorHandler>();
         services.AddAutoMapper(typeof(AutoMapperConfiguration).Assembly);
          
         services.AddValidatorsFromAssemblyContaining(typeof(CreateUserCommandValidation));

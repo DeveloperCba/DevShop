@@ -7,7 +7,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DevShop.Identity.Infrastructure.Context;
 
-public class ApplicationIdentityDbContext : IdentityDbContext, IUnitOfWork
+public class ApplicationIdentityDbContext : IdentityDbContext
+<
+    ApplicationUser,
+    ApplicationRole,
+    string,
+    ApplicationUserClaim,
+    ApplicationUserRole,
+    ApplicationUserLogin,
+    ApplicationRoleClaim,
+    ApplicationUserToken
+>, IUnitOfWork
 {
     //public DbSet<SecurityKeyWithPrivate> SecurityKeys { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
@@ -22,14 +32,14 @@ public class ApplicationIdentityDbContext : IdentityDbContext, IUnitOfWork
     //public ApplicationIdentityDbContext(){ }
 
     public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options)
-    {}
+    { }
 
-    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-    {
-        configurationBuilder.ConfigureColumnTypeConvention();
-    }
+    //protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    //{
+    //    configurationBuilder.ConfigureColumnTypeConvention();
+    //}
 
-   
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //var conn = "Server=pgsql.oficinadev.kinghost.net; Database=oficinadev; Port=5432;User Id=oficinadev;Password=Estadao101322";

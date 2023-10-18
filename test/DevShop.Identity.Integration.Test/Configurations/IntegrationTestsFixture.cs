@@ -45,9 +45,7 @@ namespace DevShop.Identity.Integration.Test.Configurations
             };
 
             Client = Factory.CreateClient();
-            //var response = await Client.PostAsJsonAsync("api/v1/auth", userData);
             var response = await Client.PostAsJsonAsync("api/v1/auth", userData);
-            //var response = await Client.PostAsync("api/v1/auth", new StringContent(JsonConvert.SerializeObject(userData)));
             response.EnsureSuccessStatusCode();
 
             var userReponse = JsonConvert.DeserializeObject<UserResponseLoginDto>(await response.Content.ReadAsStringAsync());
