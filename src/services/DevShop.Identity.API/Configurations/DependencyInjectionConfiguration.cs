@@ -5,6 +5,7 @@ using DevShop.Core.Datas.Interfaces;
 using DevShop.Core.DomainObjects;
 using DevShop.Core.Mediator;
 using DevShop.Core.Validations.Services.Email;
+using DevShop.Identity.Application.Contracts;
 using DevShop.Identity.Application.Features.Auth.Validators;
 using DevShop.Identity.Application.Features.User.Validators;
 using DevShop.Identity.Application.Mappings;

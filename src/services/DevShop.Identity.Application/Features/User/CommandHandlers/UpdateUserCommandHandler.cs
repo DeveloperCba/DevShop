@@ -1,7 +1,7 @@
 ﻿using DevShop.Core.DomainObjects;
+using DevShop.Identity.Application.Contracts;
 using DevShop.Identity.Application.Features.User.Commands;
 using DevShop.Identity.Application.Models.Dtos;
-using DevShop.Identity.Application.Services;
 using DevShop.Identity.Domain.Models;
 using DevShop.WebAPI.Core.Services;
 using MediatR;

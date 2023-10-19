@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using DevShop.Core.DomainObjects;
 using DevShop.Core.Validations.Services.Email;
+using DevShop.Identity.Application.Contracts;
 using DevShop.Identity.Application.Features.Auth.Commands;
 using DevShop.Identity.Application.Models.Dtos;
-using DevShop.Identity.Application.Services;
 using DevShop.WebAPI.Core.Services;
 using MediatR;
 namespace DevShop.Identity.Application.Features.Auth.CommandHandlers;

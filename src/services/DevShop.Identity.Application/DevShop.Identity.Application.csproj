@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
     <Folder Include="Features\Auth\QueriesHandlers\" />
     <Folder Include="Features\Auth\Queries\" />
   </ItemGroup>

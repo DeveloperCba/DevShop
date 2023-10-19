@@ -2,11 +2,11 @@
 using System.Text.Encodings.Web;
 using DevShop.Core.DomainObjects;
 using DevShop.Core.Validations.Services.Email;
+using DevShop.Identity.Application.Contracts;
 using DevShop.Identity.Application.Features.Auth.Commands;
 using DevShop.Identity.Application.Features.Auth.Dtos;
 using DevShop.Identity.Application.Models;
 using DevShop.Identity.Application.Models.Dtos;
-using DevShop.Identity.Application.Services;
 using DevShop.WebAPI.Core.Services;
 using MediatR;
 using Microsoft.Extensions.Options;

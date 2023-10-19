@@ -1,7 +1,7 @@
 ﻿using DevShop.Core.DomainObjects;
+using DevShop.Identity.Application.Contracts;
 using DevShop.Identity.Application.Features.Auth.Commands;
 using DevShop.Identity.Application.Features.User.Dtos;
-using DevShop.Identity.Application.Services;
 using DevShop.Identity.Domain.Interfaces;
 using DevShop.WebAPI.Core.Services;
 using MediatR;
@@ -46,7 +46,7 @@ public class LoginCommandHandler : BaseService, IRequestHandler<LoginCommand, Us
 
         if (result.Succeeded)
         {
-            return await _autenticationService.GenereateJwt(user.Email);
+            return await _autenticationService.GenerateJwt(user.Email);
         }
 
         if (result.IsLockedOut)

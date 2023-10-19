@@ -12,16 +12,9 @@ using DevShop.Identity.Domain.Interfaces;
 using DevShop.Identity.Domain.Models;
 using DevShop.Identity.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using DevShop.Identity.Application.Contracts;
 
 namespace DevShop.Identity.Application.Services;
-
-public interface IAutenticationService
-{
-    Task<UserResponseLoginDto> GenereateJwt(string email);
-    Task<RefreshToken> GetRefreshToken(Guid refreshToken);
-    SignInManager<ApplicationUser> SignInManager { get; set; }
-    UserManager<ApplicationUser> UserManager { get; set; }
-}
 
 public class AutenticationService : IAutenticationService
 {
@@ -46,7 +39,7 @@ public class AutenticationService : IAutenticationService
         _userRepository = userRepository;
     }
 
-    public async Task<UserResponseLoginDto> GenereateJwt(string email)
+    public async Task<UserResponseLoginDto> GenerateJwt(string email)
     {
         var user = await _userRepository.GetByFilterAsync(x => x.Email == email);
         await SignInManager.SignInAsync(user, false);
