@@ -44,4 +44,13 @@ public class AutoMapperConfiguration : Profile
         #endregion
 
     }
+
+    public class DtoToEntity : Profile
+    {
+        public DtoToEntity()
+        {
+            CreateMap<UserRoleDto, ApplicationUserRole>()
+                .ConstructUsing(c => new ApplicationUserRole());
+        }
+    }
 }

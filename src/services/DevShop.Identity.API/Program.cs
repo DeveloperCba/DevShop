@@ -1,3 +1,4 @@
+using DevShop.Core.Datas.Interfaces;
 using DevShop.Identity.API.Configurations;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -42,6 +43,9 @@ public class Program
         #region Configure Pipeline
 
         var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
+
+        InitializeDatabase(app);
+
         app.UseSwaggerConfiguration(provider);
 
         app.UseApiConfiguration(builder.Environment, builder.Configuration);
@@ -49,6 +53,13 @@ public class Program
         app.Run();
 
         #endregion
+    }
+
+    static void InitializeDatabase(WebApplication app)
+    {
+        var scope = app.Services.CreateScope();
+        var dbInitializer = scope.ServiceProvider.GetService<IDbInitializer>();
+        dbInitializer!.Initialize();
     }
 }
 

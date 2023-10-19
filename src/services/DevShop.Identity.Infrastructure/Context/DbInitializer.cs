@@ -66,8 +66,8 @@ public class DbInitializer : IDbInitializer
             City = "CUIABÁ",
             Complement  = "SEM QUADRA",
             Document = "68520993001",
-            Email = "administrador@oficinadev.kinghost.net",
-            UserName = "administrador@oficinadev.kinghost.net",
+            Email = "administrator@devshop.io",
+            UserName = "administrator@devshop.io",
             Name = "ADMINISTRADOR DO SISTEMA",
             Street = "RUA TESTE",
             Number = "345",
@@ -91,8 +91,8 @@ public class DbInitializer : IDbInitializer
             City = "CUIABÁ",
             Complement = "SEM QUADRA",
             Document = "52669843093",
-            Email = "suporte@oficinadev.kinghost.net",
-            UserName = "suporte@oficinadev.kinghost.net",
+            Email = "support@devshop.io",
+            UserName = "support@devshop.io",
             Name = "USUÁRIO DO SISTEMA",
             Street = "RUA TESTE",
             Number = "345",
@@ -102,7 +102,7 @@ public class DbInitializer : IDbInitializer
 
         _userManager.CreateAsync(customerUser, "Teste@123").GetAwaiter().GetResult();
         _userManager.AddToRoleAsync(customerUser, GlobalConstants.ADMIN).GetAwaiter().GetResult();
-        _ = _userManager.AddClaimsAsync(adminUser, new Claim[] {
+        _ = _userManager.AddClaimsAsync(customerUser, new Claim[] {
             new Claim("Create","True"),
             new Claim("Delete","False"),
             new Claim("Update","True"),
