@@ -25,7 +25,7 @@ public class MongoDbRepository<TDocument> : IMongoDbRepository<TDocument>
         _collection = database.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
     }
 
-    protected string? GetCollectionName(Type documentType)
+    protected string GetCollectionName(Type documentType)
     {
         return ((BsonCollectionAttribute)documentType.GetCustomAttributes(
                 typeof(BsonCollectionAttribute),

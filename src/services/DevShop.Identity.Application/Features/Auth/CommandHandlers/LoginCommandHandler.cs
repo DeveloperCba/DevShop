@@ -2,6 +2,7 @@
 using DevShop.Identity.Application.Contracts;
 using DevShop.Identity.Application.Features.Auth.Commands;
 using DevShop.Identity.Application.Features.User.Dtos;
+using DevShop.Identity.Application.Features.User.Events;
 using DevShop.Identity.Domain.Interfaces;
 using DevShop.WebAPI.Core.Services;
 using MediatR;
@@ -11,15 +12,16 @@ public class LoginCommandHandler : BaseService, IRequestHandler<LoginCommand, Us
 {
     private readonly IUserRepository _userRepository;
     private readonly IAutenticationService _autenticationService;
-
+    private readonly IMediator _mediator;
     public LoginCommandHandler(
         IUserRepository userRepository,
         INotify notification,
-        IAutenticationService autenticationService
-        ) : base(notification)
+        IAutenticationService autenticationService, 
+        IMediator mediator) : base(notification)
     {
         _userRepository = userRepository;
         _autenticationService = autenticationService;
+        _mediator = mediator;
     }
 
     public async Task<UserResponseLoginDto> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -46,6 +48,7 @@ public class LoginCommandHandler : BaseService, IRequestHandler<LoginCommand, Us
 
         if (result.Succeeded)
         {
+            await _mediator.Publish(new LoginEvent(user.Name, user.Email,  Guid.Parse(user.Id)));
             return await _autenticationService.GenerateJwt(user.Email);
         }
 

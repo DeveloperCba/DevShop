@@ -43,7 +43,7 @@ public class UserController : MainController
     [ProducesResponseType(typeof(ResultResponse), (int)HttpStatusCode.NotFound)]
     [ProducesResponseType(typeof(ResultResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ResultResponse), (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> GetAllUser(string? filter = null)
+    public async Task<IActionResult> GetAllUser(string filter = null)
     {
         if (!ModelState.IsValid) return CustomResponse(ModelState);
 

@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Auth\Events\" />
+    <Folder Include="Features\Auth\EventHandlers\" />
     <Folder Include="Features\Auth\QueriesHandlers\" />
     <Folder Include="Features\Auth\Queries\" />
+    <Folder Include="Features\User\EventHandlers\" />
   </ItemGroup>
 
   <ItemGroup>

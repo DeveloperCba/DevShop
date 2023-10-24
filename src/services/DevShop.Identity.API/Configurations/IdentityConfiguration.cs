@@ -62,7 +62,7 @@ public static class IdentityConfiguration
         });
     }
 
-    private static void AddDbAplicationUserIdentity(IServiceCollection services, string? conn)
+    private static void AddDbAplicationUserIdentity(IServiceCollection services, string conn)
     {
         var migrationName = "__migrationTable";
         services.AddDbContext<ApplicationIdentityDbContext>(options =>
@@ -70,7 +70,7 @@ public static class IdentityConfiguration
     }
 
 
-    private static void AddDbLog(IServiceCollection services, string? conn)
+    private static void AddDbLog(IServiceCollection services, string conn)
     {
         var migrationName = "__migrationLog";
         services.AddDbContext<LogDbContext>(options =>

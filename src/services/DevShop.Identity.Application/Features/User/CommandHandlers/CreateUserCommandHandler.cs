@@ -1,10 +1,12 @@
 ﻿using System.Text;
 using System.Text.Encodings.Web;
 using DevShop.Core.DomainObjects;
+using DevShop.Core.Mediator;
 using DevShop.Core.Validations.Services.Email;
 using DevShop.Identity.Application.Contracts;
 using DevShop.Identity.Application.Features.User.Commands;
 using DevShop.Identity.Application.Features.User.Dtos;
+using DevShop.Identity.Application.Features.User.Events;
 using DevShop.Identity.Application.Models;
 using DevShop.Identity.Domain.Interfaces;
 using DevShop.Identity.Domain.Models;
@@ -22,16 +24,19 @@ public class CreateUserCommandHandler : BaseService,
     private readonly IAutenticationService _autenticationService;
     private readonly IEmailService _emailService;
     private readonly ExternalEmailSettings _externalEmailSettings;
+    private readonly IMediator _mediator;
     public CreateUserCommandHandler(
         IUserRepository userRepository,
         INotify notification,
         IAutenticationService autenticationService,
         IEmailService emailService,
-        IOptions<ExternalEmailSettings> externalEmailSettings) : base(notification)
+        IOptions<ExternalEmailSettings> externalEmailSettings, 
+        IMediator mediator) : base(notification)
     {
         _userRepository = userRepository;
         _autenticationService = autenticationService;
         _emailService = emailService;
+        _mediator = mediator;
         _externalEmailSettings = externalEmailSettings.Value;
     }
 
@@ -51,7 +56,9 @@ public class CreateUserCommandHandler : BaseService,
             var token = await _autenticationService.UserManager.GenerateEmailConfirmationTokenAsync(user);
             var callBackUrl = $@"{_externalEmailSettings.Url}/UserIdentity/ConfirmacaoEmail?userId={user.Id}&token={UrlEncoder.Default.Encode(token)}";
 
-            await SendConfirmEmail(user.Name, user.Email, callBackUrl);
+            //await SendConfirmEmail(user.Name, user.Email, callBackUrl);
+
+            await _mediator.Publish(new CreateUserEvent(user.Name, user.Email, callBackUrl,Guid.Parse( user.Id)));
 
             await _autenticationService.SignInManager.SignInAsync(user, isPersistent: false);
 
@@ -61,8 +68,6 @@ public class CreateUserCommandHandler : BaseService,
                 Token = token,
                 UserId = user.Id
             };
-
-            // return await _autenticationService.GenereateJwt(user.Email);
         }
 
         foreach (var error in result.Errors)

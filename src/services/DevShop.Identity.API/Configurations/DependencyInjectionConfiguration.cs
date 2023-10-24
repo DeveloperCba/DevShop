@@ -48,12 +48,8 @@ public static class DependencyInjectionConfiguration
 
         services.AddRedisConfiguration(configuration);
 
-        //services.AddRestClientConfiguration();
         services.AddIdentityConfiguration(configuration);
 
-           
-
-        //services.AddMiddlewareServices();
         services.AddHttpClientService()
             .AddDependencyInjectionRepository()
             .AddDependencyInjectionService()

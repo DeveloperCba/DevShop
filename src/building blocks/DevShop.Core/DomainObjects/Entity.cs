@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DevShop.Core.Messages;
 
 namespace DevShop.Core.DomainObjects;
 
@@ -9,9 +10,28 @@ public abstract class Entity
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 
+    private List<Event> _notifications;
+    public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
+
     public Entity()
     {
         Id = Guid.NewGuid();
+    }
+
+    public void AddEvent(Event @event)
+    {
+        _notifications = _notifications ?? new List<Event>(); 
+        _notifications.Add(@event);
+    }
+
+    public void RemoveEvent(Event @event)
+    {
+        _notifications?.Remove(@event);
+    }
+
+    public void ClearEvent()
+    {
+        _notifications?.Clear();
     }
 
     public virtual bool EhValido()

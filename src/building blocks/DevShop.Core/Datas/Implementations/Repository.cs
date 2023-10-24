@@ -133,13 +133,13 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
         }
     }
 
-    public async Task<bool> HasValueAsync(Expression<Func<TEntity, bool>>? filter = null)
+    public async Task<bool> HasValueAsync(Expression<Func<TEntity, bool>> filter = null)
     {
         try
         {
             if (filter == null)
                 return (await dbSet.CountAsync()) > 0;
-            else
+ 
                 return (await dbSet.Where(filter).CountAsync()) > 0;
         }
         catch (Exception ex)

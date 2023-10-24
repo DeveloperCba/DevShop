@@ -1,18 +1,16 @@
-﻿using System.Security.Claims;
-using System.Text;
+﻿using DevShop.Core.Comunications;
+using DevShop.Identity.Application.Contracts;
+using DevShop.Identity.Application.Features.User.Dtos;
+using DevShop.Identity.Domain.Interfaces;
+using DevShop.Identity.Domain.Models;
+using DevShop.Identity.Infrastructure.Context;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DevShop.Core.Comunications;
-using DevShop.Identity.Application.Features.User.Dtos;
-using DevShop.Identity.Domain.Interfaces;
-using DevShop.Identity.Domain.Models;
-using DevShop.Identity.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
-using DevShop.Identity.Application.Contracts;
 
 namespace DevShop.Identity.Application.Services;
 

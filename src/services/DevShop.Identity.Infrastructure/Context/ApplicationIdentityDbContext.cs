@@ -1,7 +1,9 @@
 ﻿using DevShop.Core.Datas.Interfaces;
+using DevShop.Core.Mediator;
 using DevShop.Identity.Domain.Models;
 using DevShop.Identity.Infrastructure.Extensions;
 using DevShop.Identity.Infrastructure.Mappings;
+using MediatR;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,9 +32,11 @@ public class ApplicationIdentityDbContext : IdentityDbContext
     public virtual DbSet<ApplicationUserToken> ApplicationUserToken { get; set; }
 
     //public ApplicationIdentityDbContext(){ }
-
-    public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options)
-    { }
+    private readonly IMediator  _mediator;
+    public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options, IMediator mediator) : base(options)
+    {
+        _mediator = mediator;
+    }
 
     //protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     //{
@@ -73,6 +77,9 @@ public class ApplicationIdentityDbContext : IdentityDbContext
 
         }
         var success = await base.SaveChangesAsync() > 0;
+        if (success)
+            await _mediator.PublishEvent(this);
+
         return success;
 
     }

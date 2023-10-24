@@ -24,7 +24,7 @@ public abstract class MainController : ControllerBase
     protected bool ValidOperation() => !_notification.HasNotification();
 
 
-    protected ActionResult CustomResponse(object? result = null)
+    protected ActionResult CustomResponse(object result = null)
     {
         if (ValidOperation())
         {
@@ -92,7 +92,7 @@ public abstract class MainController : ControllerBase
         return CustomResponse();
     }
 
-    protected bool ResponseHasErrors(ResultResponse? response)
+    protected bool ResponseHasErrors(ResultResponse response)
     {
         if (response == null || !response.Errors.Messages.Any()) return false;
 
