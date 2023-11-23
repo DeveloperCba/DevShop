@@ -1,0 +1,113 @@
+﻿@page "/"
+@inject SweetAlertService Swal
+@inject IJSRuntime jSRuntime
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<button class="btn btn-primary"
+@onclick="@(async () => await Swal.FireAsync("Any fool can use a computer"))">
+    Try me!
+</button>
+
+<button class="btn btn-danger"
+@onclick="ShowDialog">
+    Show Dialog
+</button>
+
+<button class="btn btn-info"
+@onclick="Loading">
+    Loading!
+</button>
+@code
+{
+
+    private async Task MouseoverToast()
+    {
+        var result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Toast = true,
+                Position = SweetAlertPosition.TopEnd,
+                ShowConfirmButton = true,
+                CancelButtonText = "nÃO",
+                ShowCancelButton = true,
+                Timer = 3000,
+                TimerProgressBar = true,
+                DidOpen = new SweetAlertCallback(async () => { await BindMouseOver(); }, this),
+                //DidClose = new SweetAlertCallback(async () => { await BindMouseOver(); }, this),
+                Icon = SweetAlertIcon.Success,
+                Title = "Signed in successfully"
+            });
+    }
+
+    private async Task ShowDialog()
+    {
+
+        await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Are you sure?",
+                Text = "You will not be able to recover this imaginary file!",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes, delete it!",
+                CancelButtonText = "No, keep it"
+            }).ContinueWith(swalTask =>
+    {
+    SweetAlertResult result = swalTask.Result;
+    if (!string.IsNullOrEmpty(result.Value))
+    {
+        Swal.FireAsync(
+            "Deleted",
+            "Your imaginary file has been deleted.",
+            SweetAlertIcon.Success
+            );
+    }
+    else if (result.Dismiss == DismissReason.Cancel)
+    {
+        Swal.FireAsync(
+            "Cancelled",
+            "Your imaginary file is safe :)",
+            SweetAlertIcon.Error
+            );
+    }
+    });
+    }
+
+    private async Task Loading()
+    {
+        // await Swal.ShowLoadingAsync();
+        await Swal.FireAsync(new SweetAlertOptions
+            {
+                //ShowLoaderOnConfirm = true,
+                //Title = "Processando as informacações...",
+                Text = "YProcessando as informacações...",
+                Icon = SweetAlertIcon.Warning,
+                // ShowCancelButton = true,
+                // ConfirmButtonText = "Yes, delete it!",
+                // CancelButtonText = "No, keep it",
+                TimerProgressBar = true,
+                Timer = 2003,
+                ShowLoaderOnDeny = false,
+                DidOpen = new SweetAlertCallback(async () =>
+                {
+                    await Swal.ShowLoadingAsync();
+                }, this),
+                DidClose = new SweetAlertCallback(async () =>
+                {
+                    await Swal.HideLoadingAsync();
+                }, this),
+
+            });
+    }
+
+
+    private async Task BindMouseOver()
+    {
+        await Swal.FireAsync("Any fool can use a computer");
+    }
+}
