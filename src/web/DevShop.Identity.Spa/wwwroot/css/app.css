@@ -99,3 +99,28 @@ a, .btn-link {
     .loading-progress-text:after {
         content: var(--blazor-load-percentage-text, "Carregando...");
     }
+
+
+/* app.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 16px;
+    transition: margin-left 0.3s;
+}
+
+@media screen and (max-width: 600px) {
+    .sidebar {
+        left: -250px;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}

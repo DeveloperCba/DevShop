@@ -1,0 +1,59 @@
+﻿@using DevShop.Identity.Spa.Models
+@using DevShop.Identity.Spa.Services
+<!-- Sidebar.razor -->
+<div class="sidebar" @style="SidebarStyle">
+    <div class="sidebar-header">
+        <button @onclick="ToggleSidebar">☰</button>
+    </div>
+    <div class="sidebar-content">
+        <ul>
+            @foreach (var menuItem in MenuItens)
+            {
+                <li>
+                    <a href="@menuItem.Url">
+                        <i class="@menuItem.IconClass"></i> @menuItem.Nome
+                    </a>
+                    @if (menuItem.Subitens != null && menuItem.Subitens.Any())
+                    {
+                        <ul>
+                            @foreach (var subItem in menuItem.Subitens)
+                            {
+                                <li>
+                                    <a href="@subItem.Url">
+                                        <i class="@subItem.IconClass"></i> @subItem.Nome
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+    private bool isSidebarOpen = false;
+    private List<MenuItem> MenuItens;
+
+    [Inject]
+    private MenuService MenuService { get; set; }
+
+    private string SidebarStyle => isSidebarOpen ? "left: 0;" : "left: -250px;";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        CarregarMenu();
+    }
+
+    private void ToggleSidebar()
+    {
+        isSidebarOpen = !isSidebarOpen;
+    }
+
+    private void CarregarMenu()
+    {
+        MenuItens = MenuService.ObterItensMenu();
+    }
+}

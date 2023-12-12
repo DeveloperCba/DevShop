@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Test", "test\Core.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{590C3270-92AA-4B0B-BD75-DB0235ADACAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevShop.Identity.Spa", "src\web\DevShop.Identity.Spa\DevShop.Identity.Spa.csproj", "{46E2640E-08B9-4ABF-B01E-1396DFA25D66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevShop.Identity.Spa", "src\web\DevShop.Identity.Spa\DevShop.Identity.Spa.csproj", "{46E2640E-08B9-4ABF-B01E-1396DFA25D66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
